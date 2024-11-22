@@ -1,4 +1,5 @@
 from tkinter import Tk, BOTH, Canvas
+from geometry import Line
 
 
 class Window:
@@ -6,10 +7,10 @@ class Window:
     def __init__(self, width: int, height: int, title: str) -> None:
         self.__root = Tk()
         self.__root.title(title)
+        self.__root.protocol("WM_DELETE_WINDOW", self.close)
         self.__canvas = Canvas(self.__root, width=width, height=height)
         self.__canvas.pack()
         self.__active = False
-        self.__root.protocol("WM_DELETE_WINDOW", self.close)
 
     def redraw(self) -> None:
         """ Redraws the Tkinter window. """
@@ -25,3 +26,12 @@ class Window:
     def close(self) -> None:
         """ Closes the Tkinter window by setting the active member to False. """
         self.__active = False
+
+    def draw_line(self, line: Line, colour: str, width: int = 2) -> None:
+        """
+        Draws a given Line object on the canvas.
+        :param line: The Line object to draw.
+        :param colour: The colour of the line.
+        :param width: The width of the line.
+        """
+        line.draw(self.__canvas, colour, width)
