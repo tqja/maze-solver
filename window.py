@@ -1,5 +1,5 @@
 from tkinter import Tk, BOTH, Canvas
-from geometry import Line
+from geometry import Line, Box
 
 
 class Window:
@@ -27,7 +27,7 @@ class Window:
         """ Closes the Tkinter window by setting the active member to False. """
         self.__active = False
 
-    def draw_line(self, line: Line, colour: str, width: int = 2) -> None:
+    def draw_line(self, line: Line, colour: str = "black", width: int = 2) -> None:
         """
         Draws a given Line object on the canvas.
         :param line: The Line object to draw.
@@ -35,3 +35,12 @@ class Window:
         :param width: The width of the line.
         """
         line.draw(self.__canvas, colour, width)
+
+    def draw_box(self, box: Box, colour: str = "black", width: int = 2) -> None:
+        """
+        Draws a given Box object on the canvas.
+        :param box: The Box object to draw.
+        :param colour: The colour of the box lines.
+        :param width: The width of the box lines.
+        """
+        box.draw(self.__canvas, colour, width)
