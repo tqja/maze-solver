@@ -44,3 +44,7 @@ class Window:
         :param width: The width of the box lines.
         """
         box.draw(self.__canvas, colour, width)
+
+    def draw_path(self, box1: Box, box2: Box, backtrack: bool = False) -> None:
+        """ Draws a path between the centre of two boxes. """
+        box1.draw_path(self.__canvas, box2, backtrack)

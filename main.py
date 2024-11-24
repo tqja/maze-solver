@@ -10,11 +10,21 @@ def main():
     window = Window(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE)
 
     box1 = Box(
-        True, True, True, True,
-        400, 1200, 225, 675
+        True, True, True, False,
+        400, 700, 225, 675
     )
 
-    window.draw_box(box1, "red", 2)
+    box2 = Box(
+        True, True, False, True,
+        900, 1200, 225, 675
+    )
+
+    window.draw_box(box1, "black", 2)
+    window.draw_box(box2, "black", 2)
+    window.draw_path(box1, box2, False)
+
+    # line = Line(Point(550, 450), Point(1050, 450))
+    # window.draw_line(line)
 
     window.redraw_while_active()
 

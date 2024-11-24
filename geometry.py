@@ -1,4 +1,5 @@
 from tkinter import Canvas
+from typing import Tuple
 
 
 class Point:
@@ -6,6 +7,9 @@ class Point:
     def __init__(self, x: int, y: int) -> None:
         self.x = x
         self.y = y
+
+    def __repr__(self) -> str:
+        return f'Point({self.x}, {self.y})'
 
 
 class Line:
@@ -27,6 +31,9 @@ class Line:
             self.__p2.x, self.__p2.y,
             fill=colour, width=width
         )
+
+    def __repr__(self):
+        return f"Line(\n    {self.__p1},\n    {self.__p2}\n)"
 
 
 class Box:
@@ -62,3 +69,26 @@ class Box:
             Line(p1, p3).draw(canvas, colour, width)
         if self.__right:
             Line(p2, p4).draw(canvas, colour, width)
+
+    def draw_path(self, canvas: Canvas, box, backtrack: bool = False) -> None:
+        """
+        Draws a path from the center of this box to the center of the given box.
+        :param canvas: The canvas to draw the path on.
+        :param box: The box to draw the path to.
+        :param backtrack: Whether to display a backtracking path (red).
+        """
+        xm, ym = self.get_mid_coords()
+        box_xm, box_ym = box.get_mid_coords()
+        print(xm, ym, box_xm, box_ym)
+
+        colour = "red" if backtrack else "blue"
+        p1 = Point(xm, ym)
+        p2 = Point(box_xm, box_ym)
+        path = Line(p1, p2)
+
+        path.draw(canvas, colour)
+
+    def get_mid_coords(self) -> Tuple[int, int]:
+        xm = self.__x1 + (self.__x2 - self.__x1) // 2
+        ym = self.__y1 + (self.__y2 - self.__y1) // 2
+        return xm, ym
