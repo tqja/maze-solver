@@ -38,16 +38,17 @@ class Line:
 
 class Box:
     """ Box shape with up to 4 sides. """
-    def __init__(self, up: bool, down: bool, left: bool, right: bool,
-                 x1: int, x2: int, y1: int, y2: int) -> None:
-        self.__up = up
-        self.__down = down
-        self.__left = left
-        self.__right = right
+    def __init__(self, window, x1: int, x2: int, y1: int, y2: int) -> None:
+        self.up = True
+        self.down = True
+        self.left = True
+        self.right = True
         self.__x1 = x1
         self.__x2 = x2
         self.__y1 = y1
         self.__y2 = y2
+        self.__window = window
+        self.visited = False
 
     def draw(self, canvas: Canvas, colour: str, width: int = 2) -> None:
         """
@@ -61,14 +62,18 @@ class Box:
         p3 = Point(self.__x1, self.__y2)
         p4 = Point(self.__x2, self.__y2)
 
-        if self.__up:
-            Line(p1, p2).draw(canvas, colour, width)
-        if self.__down:
-            Line(p3, p4).draw(canvas, colour, width)
-        if self.__left:
-            Line(p1, p3).draw(canvas, colour, width)
-        if self.__right:
-            Line(p2, p4).draw(canvas, colour, width)
+        blank = "#f0f0f0"
+        c = colour if self.up else blank
+        Line(p1, p2).draw(canvas, c, width)
+
+        c = colour if self.down else blank
+        Line(p3, p4).draw(canvas, c, width)
+
+        c = colour if self.left else blank
+        Line(p1, p3).draw(canvas, c, width)
+
+        c = colour if self.right else blank
+        Line(p2, p4).draw(canvas, c, width)
 
     def draw_path(self, canvas: Canvas, box, backtrack: bool = False) -> None:
         """
@@ -79,7 +84,6 @@ class Box:
         """
         xm, ym = self.get_mid_coords()
         box_xm, box_ym = box.get_mid_coords()
-        print(xm, ym, box_xm, box_ym)
 
         colour = "red" if backtrack else "blue"
         p1 = Point(xm, ym)

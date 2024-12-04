@@ -1,4 +1,5 @@
 from window import Window
+from maze import Maze
 from geometry import Point, Line, Box
 
 SCREEN_WIDTH = 1600
@@ -8,23 +9,14 @@ WINDOW_TITLE = "Maze Solver"
 
 def main():
     window = Window(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE)
+    rows = 12
+    cols = 16
+    margin = 50
+    box_width = (SCREEN_WIDTH - 2 * margin) // cols
+    box_height = (SCREEN_HEIGHT - 2 * margin) // rows
 
-    box1 = Box(
-        True, True, True, False,
-        400, 700, 225, 675
-    )
-
-    box2 = Box(
-        True, True, False, True,
-        900, 1200, 225, 675
-    )
-
-    window.draw_box(box1, "black", 2)
-    window.draw_box(box2, "black", 2)
-    window.draw_path(box1, box2, False)
-
-    # line = Line(Point(550, 450), Point(1050, 450))
-    # window.draw_line(line)
+    maze = Maze(margin, margin, rows, cols, box_width, box_height, window)
+    maze.solve()
 
     window.redraw_while_active()
 
